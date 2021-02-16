@@ -1,0 +1,38 @@
+{
+  "connectivity": [
+    {
+      "name": "testcontainer -> https://www.vg.no (accessPolicy external allowed)",
+      "expected": true,
+      "url": "https://www.vg.no"
+    },
+    {
+      "name": "testcontainer -> https://www.db.no (accessPolicy external allowed)",
+      "expected": false,
+      "url": "https://www.xxxlkjljlkjasdlfjlkjlvkjlkjw.no"
+    }
+  ],
+  "storage":
+  [
+    {
+      "name": "testcontainer <-> bucket",
+      "writeurl": "https://testapp-storage.dev-gcp.nais.io/writebucket",
+      "readurl": "https://testapp-storage.dev-gcp.nais.io/readbucket"
+    },
+    {
+      "name": "testcontainer <-> database",
+      "writeurl": "https://testapp-storage.dev-gcp.nais.io/writedb",
+      "readurl": "https://testapp-storage.dev-gcp.nais.io/readdb"
+    }
+  ],
+  "latency":
+  [
+    {
+      "name": "gcp -> vg.no",
+      "host": "vg.no"
+    },
+    {
+      "name": "gcp -> sbs",
+      "host": "db.no"
+    }
+  ]
+}

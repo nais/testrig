@@ -1,0 +1,27 @@
+{
+  "name": "testrig",
+  "version": "1.0.0",
+  "description": "nais gcp cluster testrig ",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nais/testrig.git"
+  },
+  "license": "mit",
+  "bugs": {
+    "url": "https://github.com/nais/testrig/issues"
+  },
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "ping": "^0.4.0",
+    "prom-client": "^13.1.0"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2"
+  }
+}
