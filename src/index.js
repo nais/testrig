@@ -37,11 +37,11 @@ app.get("/adhoc", async (req, res) => {
     const results = await runConnectivityTestsAdhoc(tests.connectivity);
 
     const containsFailed = (tests) => {
-        tests.forEach((test) => {
-            if (test.success === false) {
+        for (let i in tests) {
+            if (tests[i].success === false) {
                 return true;
             }
-        });
+        }
         return false;
     };
 
