@@ -1,4 +1,4 @@
-const {runConnectivityTests} = require('./connectivity');
+const {runConnectivityTests} = require('./connectivity')
 
 test('correctly reports successful tests', async () => {
     const tests = [
@@ -12,17 +12,17 @@ test('correctly reports successful tests', async () => {
             "expected": false,
             "url": "httppp://doesntwork"
         }
-    ];
+    ]
 
-    const result = await runConnectivityTests(tests);
+    const result = await runConnectivityTests(tests)
 
     const expected = [
         {success: true, name: 'should work'},
         {success: true, name: 'should not work'}
-    ];
+    ]
 
-    expect(result).toStrictEqual(expected);
-});
+    expect(result).toStrictEqual(expected)
+})
 
 test('correctly reports failing tests', async () => {
     const tests = [
@@ -36,14 +36,14 @@ test('correctly reports failing tests', async () => {
             "expected": false,
             "url": "httppp://doesntwork"
         }
-    ];
+    ]
 
-    const result = await runConnectivityTests(tests);
+    const result = await runConnectivityTests(tests)
 
     const expected = [
         {success: false, name: 'should work'},
         {success: true, name: 'should not work'}
-    ];
+    ]
 
-    expect(result).toStrictEqual(expected);
-});
+    expect(result).toStrictEqual(expected)
+})

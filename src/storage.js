@@ -1,7 +1,7 @@
-const fetch = require("node-fetch");
+const fetch = require("node-fetch")
 const {AbortController} = require("abort-controller")
 
-const requestTimeout = 10 * 1000;
+const requestTimeout = 10 * 1000
 
 exports.runStorageTests = (tests, storageGauge) => {
     const testString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 4)
