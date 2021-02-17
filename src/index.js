@@ -3,8 +3,8 @@ const express = require("express");
 const prom = require("prom-client");
 const {runLatencyTests} = require("./latency");
 const {runStorageTests} = require("./storage");
-const {markdownify} = require("./markdown")
-const {runConnectivityTests, runConnectivityTestsAdhoc} = require("./connectivity");
+const {runConnectivityTests} = require("./connectivity");
+const {markdownify} = require("./markdown");
 
 const testCasesFilePath = process.env["TEST_CASES_FILE_PATH"] || "./tests.json";
 const tests = JSON.parse(fs.readFileSync(testCasesFilePath, "utf8"));
@@ -30,22 +30,19 @@ const storageGauge = new prom.Gauge({
 
 const app = express();
 const port = 8080;
+
 app.get("/metrics", async (req, res) => {
     res.send(await prom.register.metrics());
 });
+
 app.get("/adhoc", async (req, res) => {
-    const results = await runConnectivityTestsAdhoc(tests.connectivity);
+    const results = await runConnectivityTests(tests.connectivity);
 
     const containsFailed = (tests) => {
-        for (let i in tests) {
-            if (tests[i].success === false) {
-                return true;
-            }
-        }
-        return false;
+        return tests.some(e => e.success === false);
     };
 
-    const payload = {success: !containsFailed(results), markdown: markdownify(results)}
+    const payload = {success: !containsFailed(results), markdown: markdownify(results)};
 
     res.send(payload);
 });
@@ -53,6 +50,7 @@ app.get("/adhoc", async (req, res) => {
 app.get("/", (req, res) => {
     res.send("ok");
 });
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
@@ -66,5 +64,7 @@ setInterval(() => {
 }, 10 * 1000);
 
 setInterval(() => {
-    runConnectivityTests(tests.connectivity, connectivityGauge);
+    runConnectivityTests(tests.connectivity).forEach(res => {
+        connectivityGauge.labels(res.name).set(res.success ? 1 : 0);
+    });
 }, 10 * 1000);

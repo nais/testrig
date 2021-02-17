@@ -4,7 +4,7 @@ const {logError} = require("./log");
 
 const requestTimeout = 10 * 1000;
 
-exports.runConnectivityTestsAdhoc = async (tests) => {
+exports.runConnectivityTests = async (tests) => {
     return await Promise.all(tests.map(async (test) => {
         let success;
         try {
@@ -16,21 +16,6 @@ exports.runConnectivityTestsAdhoc = async (tests) => {
         }
         return {success: success, name: test.name};
     }));
-};
-exports.runConnectivityTests = (tests, connectivityGauge) => {
-    tests.forEach(async (test) => {
-        try {
-            const reached = await reachable(test);
-            connectivityGauge
-                .labels(test.name)
-                .set(reached === test.expected ? 1 : 0);
-        } catch (err) {
-            logError(test.name, err);
-            connectivityGauge
-                .labels(test.name)
-                .set(0);
-        }
-    });
 };
 
 const reachable = async (test) => {
