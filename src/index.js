@@ -57,14 +57,14 @@ app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
 
-// setInterval(() => {
-//     runLatencyTests(tests.latency, latencyHistogram);
-// }, 5 * 1000);
-//
-// setInterval(() => {
-//     runStorageTests(tests.storage, storageGauge);
-// }, 10 * 1000);
-//
-// setInterval(() => {
-//     runConnectivityTests(tests.connectivity, connectivityGauge);
-// }, 10 * 1000);
+setInterval(() => {
+    runLatencyTests(tests.latency, latencyHistogram);
+}, 5 * 1000);
+
+setInterval(() => {
+    runStorageTests(tests.storage, storageGauge);
+}, 10 * 1000);
+
+setInterval(() => {
+    runConnectivityTests(tests.connectivity, connectivityGauge);
+}, 10 * 1000);
