@@ -55,16 +55,29 @@ app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
 
-setInterval(() => {
-    runLatencyTests(tests.latency, latencyHistogram)
-}, 5 * 1000)
+if (tests.latency) {
+    setInterval(() => {
+        runLatencyTests(tests.latency, latencyHistogram)
+    }, 5 * 1000)
+} else {
+    console.log("no latency tests defined, skipping...")
+}
 
-setInterval(() => {
-    runStorageTests(tests.storage, storageGauge)
-}, 10 * 1000)
+if (tests.storage) {
+    setInterval(() => {
+        runStorageTests(tests.storage, storageGauge)
+    }, 10 * 1000)
+} else {
+    console.log("no storage tests defined, skipping...")
+}
 
-setInterval(() => {
-    runConnectivityTests(tests.connectivity).forEach(res => {
-        connectivityGauge.labels(res.name).set(res.success ? 1 : 0)
-    })
-}, 10 * 1000)
+if (tests.connectivity) {
+
+    setInterval(() => {
+        runConnectivityTests(tests.connectivity).forEach(res => {
+            connectivityGauge.labels(res.name).set(res.success ? 1 : 0)
+        })
+    }, 10 * 1000)
+} else {
+    console.log("no connectivity tests defined, skipping...")
+}
