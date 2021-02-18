@@ -1,6 +1,6 @@
 {
   "name": "testrig",
-  "version": "1.4.0",
+  "version": "1.0.0",
   "description": "nais gcp cluster testrig ",
   "main": "./src/index.js",
   "scripts": {
