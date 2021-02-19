@@ -64,7 +64,7 @@ if (tests.latency) {
 }
 
 if (tests.storage) {
-    setInterval(() => {
+    setInterval(async () => {
         runStorageTests(tests.storage, storageGauge)
     }, 10 * 1000)
 } else {
@@ -72,9 +72,9 @@ if (tests.storage) {
 }
 
 if (tests.connectivity) {
-
-    setInterval(() => {
-        runConnectivityTests(tests.connectivity).forEach(res => {
+    setInterval(async () => {
+        const res = await runConnectivityTests(tests.connectivity)
+        res.forEach(res => {
             connectivityGauge.labels(res.name).set(res.success ? 1 : 0)
         })
     }, 10 * 1000)
