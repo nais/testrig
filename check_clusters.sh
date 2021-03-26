@@ -4,8 +4,14 @@
 export no_proxy=".nais.io,prometheus-pushgateway.nais.adeo.no"
 declare -a clusters=("dev-gcp" "prod-gcp")
 
+
 for cluster in "${clusters[@]}"; do
   result=$(curl -s https://testrig.${cluster}.nais.io/adhoc > ${cluster}.json)
+
+  if [ $? -ne 0 ]; then
+    echo "$(date) - Failed retrieving data from testrig in ${cluster}"
+    exit 1
+  fi
 
   while read -r httpstest; do
     testname=$(echo ${httpstest} | cut -d"(" -f1 |sed 's/ -> https:\/\//_/g' | tr '.' '_'| tr '-' '_')
@@ -19,3 +25,4 @@ for cluster in "${clusters[@]}"; do
 
   done < <(cat ${cluster}.json | jq -r .markdown | grep https)
 done
+
