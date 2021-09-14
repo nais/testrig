@@ -31,7 +31,7 @@ const reachable = async (test) => {
             return true
         } else {
             const text = await response.text()
-            logError(test.name, `fetching url ${url}, status: ${response.status}: ${text}`)
+            logError(test.name, `fetching url ${test.url}, status: ${response.status}: ${text}`)
             return false
         }
 
