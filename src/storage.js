@@ -29,9 +29,11 @@ const testStorage = async (test) => {
     try {
         const response = await fetch(test.testUrl, controller.signal)
         const text = await response.text()
-        if (response.status === 200) return true
-        else {
-            console.error(`${new Date().toUTCString()} - ${test.name}: code(${response.status}): err ${text}`)
+        const status = response.status
+        if (status === 200) {
+            return true
+        } else {
+            console.error(`${new Date().toUTCString()} - ${test.name}: code(${status}): err ${text}`)
             return false
         }
     } catch (err) {
