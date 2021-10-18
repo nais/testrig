@@ -9,7 +9,7 @@ exports.runLatencyTests = (tests, latencyHistogram) => {
                 .labels(test.name)
                 .observe(res.time)
         } catch (err) {
-            logError(err)
+            logError(test.name, err)
         }
     })
 }
