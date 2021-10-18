@@ -5,12 +5,12 @@ const requestTimeout = 10 * 1000
 
 exports.runStorageTests = (tests, storageGauge) => {
     tests.forEach(async (test) => {
-        let read
+        let success
         try {
-            read = await testStorage(test)
+            success = await testStorage(test)
             storageGauge
                 .labels(test.name)
-                .set(read ? 1 : 0)
+                .set(success ? 1 : 0)
         } catch (err) {
             storageGauge
                 .labels(test.name)
